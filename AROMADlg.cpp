@@ -11,6 +11,8 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+#include <string>
+using namespace std;
 
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
@@ -142,9 +144,6 @@ void CAROMADlg::OnPaint()
 
 		// 아이콘을 그립니다.
 		dc.DrawIcon(x, y, m_hIcon);
-		UpdateData(TRUE);
-		text = "01";
-		UpdateData(FALSE);
 	}
 	else
 	{
@@ -161,23 +160,25 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 
 void CAROMADlg::OnClickedButton1()
 {
+	CkString strOut;
+	CkSpider spider;
+
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	/*if (text == "01") text = "00";
 	else text = "01";*/
-
-	CkString strOut;
-
-	CkSpider spider;
 
 	//  The Initialize method may be called with just the domain name,
 	//  such as "www.joelonsoftware.com" or a full URL.  If you pass only
 	//  the domain name, you must add URLs to the unspidered list by calling
 	//  AddUnspidered.  Otherwise, the URL you pass to Initialize is the 1st
 	//  URL in the unspidered list.
-	spider.Initialize("www.joelonsoftware.com");
 
-	spider.AddUnspidered("http://www.joelonsoftware.com/");
+	const char * url = "www.joelonsoftware.com";
+	const char * fUrl = "https://www.joelonsoftware.com";
+	spider.Initialize(url);
+
+	spider.AddUnspidered(fUrl);
 
 	bool success;
 	success = spider.CrawlNext();

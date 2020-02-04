@@ -25,13 +25,13 @@ class CkBaseProgress;
 // CLASS: CkSpider
 class CK_VISIBLE_PUBLIC CkSpider  : public CkClassWithCallbacks
 {
-    private:
+private:
 
 	// Don't allow assignment or copying these objects.
 	CkSpider(const CkSpider &);
 	CkSpider &operator=(const CkSpider &);
 
-    public:
+public:
 	CkSpider(void);
 	virtual ~CkSpider(void);
 
