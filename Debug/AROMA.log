@@ -1,6 +1,4 @@
-﻿  AROMA.cpp
-  AROMADlg.cpp
-  코드를 생성하고 있습니다...
+﻿  AROMADlg.cpp
 AROMADlg.obj : error LNK2019: "public: __thiscall CkString::CkString(void)" (??0CkString@@QAE@XZ) 외부 기호(참조 위치: "public: void __thiscall CAROMADlg::OnClickedButton1(void)" (?OnClickedButton1@CAROMADlg@@QAEXXZ) 함수)에서 확인하지 못했습니다.
 AROMADlg.obj : error LNK2019: "public: virtual __thiscall CkString::~CkString(void)" (??1CkString@@UAE@XZ) 외부 기호(참조 위치: "public: void __thiscall CAROMADlg::OnClickedButton1(void)" (?OnClickedButton1@CAROMADlg@@QAEXXZ) 함수)에서 확인하지 못했습니다.
 AROMADlg.obj : error LNK2019: "public: void __thiscall CkString::append(char const *)" (?append@CkString@@QAEXPBD@Z) 외부 기호(참조 위치: "public: void __thiscall CAROMADlg::OnClickedButton1(void)" (?OnClickedButton1@CAROMADlg@@QAEXXZ) 함수)에서 확인하지 못했습니다.

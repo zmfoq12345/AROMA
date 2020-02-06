@@ -174,11 +174,11 @@ void CAROMADlg::OnClickedButton1()
 	//  AddUnspidered.  Otherwise, the URL you pass to Initialize is the 1st
 	//  URL in the unspidered list.
 
-	const char * url = "www.joelonsoftware.com";
-	const char * fUrl = "https://www.joelonsoftware.com";
-	spider.Initialize(url);
+	const char * domain = "www.joelonsoftware.com";
+	const char * url = "https://www.joelonsoftware.com";
+	spider.Initialize(domain);
 
-	spider.AddUnspidered(fUrl);
+	spider.AddUnspidered(url);
 
 	bool success;
 	success = spider.CrawlNext();
