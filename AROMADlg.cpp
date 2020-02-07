@@ -12,6 +12,13 @@
 #define new DEBUG_NEW
 #endif
 
+#pragma comment(lib, "strmiids.lib")
+
+#ifdef _DEBUG
+#pragma comment(lib, "dsh_tw_direct_show.lib")
+#else
+#pragma comment(lib, "rst_tw_direct_show.lib")
+#endif
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -68,6 +75,9 @@ BEGIN_MESSAGE_MAP(CAROMADlg, CDialogEx)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
+	ON_WM_DESTROY()
+	ON_BN_CLICKED(IDC_BUTTON2, &CAROMADlg::OnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON1, &CAROMADlg::OnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -102,14 +112,22 @@ BOOL CAROMADlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 큰 아이콘을 설정합니다.
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
-	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
+	// Circle Window
 	CRgn rgn;
-	rgn.CreateEllipticRgn(0, 0, 400, 400);
+	rgn.CreateEllipticRgn(400, 0, 0, 400);
 	SetWindowRgn(rgn, TRUE);
 
 	SetBackgroundColor(RGB(0, 200, 255));
 
+	// CamData 가져오기
+	mLiveCam.MakeDeviceList();
+
+	mpPreview = mLiveCam.MakePreviewGraphBuilder(0);
+	if (mpPreview != NULL) {
+		mpPreview->SetPreviewMode(m_hWnd, -100, 50);
+		mpPreview->StartPreview();
+	}
+	
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
@@ -176,7 +194,6 @@ void CAROMADlg::OnLButtonDown(UINT nFlags, CPoint point)
 	CDialogEx::OnLButtonDown(nFlags, point);
 }
 
-
 void CAROMADlg::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if (m_is_clicked) {
@@ -186,7 +203,6 @@ void CAROMADlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	CDialogEx::OnLButtonUp(nFlags, point);
 }
-
 
 void CAROMADlg::OnMouseMove(UINT nFlags, CPoint point)
 {
@@ -205,3 +221,28 @@ void CAROMADlg::OnMouseMove(UINT nFlags, CPoint point)
 
 	CDialogEx::OnMouseMove(nFlags, point);
 }
+
+void CAROMADlg::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+
+	if (mpPreview != NULL) {
+		mpPreview->StopPreview();
+		delete mpPreview;
+	}
+
+	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+}
+
+void CAROMADlg::OnClickedButton1()
+{
+	HDC h = (HDC)m_hWnd;
+	mpPreview->ScreenShot(h, 0,0,0,0);
+}
+
+
+void CAROMADlg::OnClickedButton2()
+{
+	OnOK();
+}
+

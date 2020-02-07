@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{69B3C2B7-87BE-4FB2-8743-7E02EC0B97C6}</ProjectGuid>
+    <ProjectGuid>{D0B0077C-21D3-40B9-998A-E929FE94CB77}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>AROMA</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>

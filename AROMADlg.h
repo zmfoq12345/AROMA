@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "tw_direct_show.h"
 
 // CAROMADlg 대화 상자
 class CAROMADlg : public CDialogEx
@@ -12,6 +13,8 @@ class CAROMADlg : public CDialogEx
 private:
 	CPoint m_prev_pos;
 	BOOL m_is_clicked = FALSE;
+	TW_LiveCam mLiveCam;
+	TW_PreviewGraphBuilder* mpPreview = NULL;
 
 // 생성입니다.
 public:
@@ -40,4 +43,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnDestroy();
+	afx_msg void OnClickedButton2();
+	afx_msg void OnClickedButton1();
 };
