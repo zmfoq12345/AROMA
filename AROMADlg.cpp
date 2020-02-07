@@ -123,6 +123,7 @@ BOOL CAROMADlg::OnInitDialog()
 	mLiveCam.MakeDeviceList();
 
 	mpPreview = mLiveCam.MakePreviewGraphBuilder(0);
+	//mcPreview = mLiveCam.MakeCaptureGraphBuilder(0, m_hWnd);
 	if (mpPreview != NULL) {
 		mpPreview->SetPreviewMode(m_hWnd, -100, 50);
 		mpPreview->StartPreview();
@@ -181,6 +182,9 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CAROMADlg::ConnectDB(){
+	
+}
 
 void CAROMADlg::saveImg() {
 	// 화면 전체를 캡쳐하기 위해서 Window DC 를 사용합니다. ::GetDC(NULL) 이라고 해도 결과는 동일합니다.
@@ -188,6 +192,13 @@ void CAROMADlg::saveImg() {
 
 	// 캡쳐에 사용할 CImage 객체를 선언한다.
 	CImage tips_image;
+
+	CRect r;
+	GetWindowRect(r);
+
+	// mcPreview->GetWidth();
+	// mcPreview->GetHeight();
+	// mcPreview->GetWidth(), mcPreview->GetHeight(),
 
 	// 수평 해상도를 얻는다.
 	int cx = ::GetSystemMetrics(SM_CXSCREEN);
@@ -199,10 +210,10 @@ void CAROMADlg::saveImg() {
 	int color_depth = ::GetDeviceCaps(h_dc, BITSPIXEL);
 
 	// 캡쳐에 사용할 이미지를 생성한다.
-	tips_image.Create(cx, cy, color_depth, 0);
+	tips_image.Create(r.Width() - 68, r.Width() - 68, color_depth, 0);
 
 	// 화면 전체 이미지를 m_tips_image 객체에 복사한다. 
-	::BitBlt(tips_image.GetDC(), 0, 0, cx, cy, h_dc, 0, 0, SRCCOPY);
+	::BitBlt(tips_image.GetDC(), 0, 0, cx, cy, h_dc, r.Width()+260, r.Height()-150, SRCCOPY);
 
 	// 캡쳐한 이미지를 "test.png" 라는 이름으로 저장한다.
 	tips_image.Save(L"test.png", Gdiplus::ImageFormatPNG);
@@ -268,6 +279,9 @@ void CAROMADlg::OnDestroy()
 void CAROMADlg::OnClickedButton1()
 {
 	saveImg();
+
+
+
 	// HDC hdc = ::GetDC(m_hWnd);
 	// mpPreview->ScreenShot(hdc, 100,100,100,100);
 }

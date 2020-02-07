@@ -15,6 +15,7 @@ private:
 	BOOL m_is_clicked = FALSE;
 	TW_LiveCam mLiveCam;
 	TW_PreviewGraphBuilder* mpPreview = NULL;
+	TW_CaptureGraphBuilder* mcPreview = NULL;
 
 // 생성입니다.
 public:
@@ -47,4 +48,5 @@ public:
 	afx_msg void OnClickedButton2();
 	afx_msg void OnClickedButton1();
 	virtual void saveImg();
+	virtual void ConnectDB();
 };
