@@ -46,4 +46,5 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg void OnClickedButton2();
 	afx_msg void OnClickedButton1();
+	virtual void saveImg();
 };

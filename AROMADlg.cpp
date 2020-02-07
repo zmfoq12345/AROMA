@@ -159,6 +159,7 @@ void CAROMADlg::OnPaint()
 		// 클라이언트 사각형에서 아이콘을 가운데에 맞춥니다.
 		int cxIcon = GetSystemMetrics(SM_CXICON);
 		int cyIcon = GetSystemMetrics(SM_CYICON);
+
 		CRect rect;
 		GetClientRect(&rect);
 		int x = (rect.Width() - cxIcon + 1) / 2;
@@ -181,6 +182,36 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 }
 
 
+void CAROMADlg::saveImg() {
+	// 화면 전체를 캡쳐하기 위해서 Window DC 를 사용합니다. ::GetDC(NULL) 이라고 해도 결과는 동일합니다.
+	HDC h_dc = ::GetWindowDC(NULL);
+
+	// 캡쳐에 사용할 CImage 객체를 선언한다.
+	CImage tips_image;
+
+	// 수평 해상도를 얻는다.
+	int cx = ::GetSystemMetrics(SM_CXSCREEN);
+
+	// 수직 해상도를 얻는다.
+	int cy = ::GetSystemMetrics(SM_CYSCREEN);
+
+	// 화면의 색상 수를 얻는다.
+	int color_depth = ::GetDeviceCaps(h_dc, BITSPIXEL);
+
+	// 캡쳐에 사용할 이미지를 생성한다.
+	tips_image.Create(cx, cy, color_depth, 0);
+
+	// 화면 전체 이미지를 m_tips_image 객체에 복사한다. 
+	::BitBlt(tips_image.GetDC(), 0, 0, cx, cy, h_dc, 0, 0, SRCCOPY);
+
+	// 캡쳐한 이미지를 "test.png" 라는 이름으로 저장한다.
+	tips_image.Save(L"test.png", Gdiplus::ImageFormatPNG);
+
+	// 화면 캡쳐에 사용했던 DC를 해제한다.
+	::ReleaseDC(NULL, h_dc);
+
+	tips_image.ReleaseDC();
+}
 
 void CAROMADlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
@@ -236,8 +267,9 @@ void CAROMADlg::OnDestroy()
 
 void CAROMADlg::OnClickedButton1()
 {
-	HDC h = (HDC)m_hWnd;
-	mpPreview->ScreenShot(h, 0,0,0,0);
+	saveImg();
+	// HDC hdc = ::GetDC(m_hWnd);
+	// mpPreview->ScreenShot(hdc, 100,100,100,100);
 }
 
 
@@ -245,4 +277,3 @@ void CAROMADlg::OnClickedButton2()
 {
 	OnOK();
 }
-
