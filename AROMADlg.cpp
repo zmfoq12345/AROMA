@@ -1,18 +1,16 @@
 ﻿
 // AROMADlg.cpp: 구현 파일
 //
+
 #include "pch.h"
 #include "framework.h"
 #include "AROMA.h"
 #include "AROMADlg.h"
 #include "afxdialogex.h"
-#include "include/CkSpider.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-#include <string>
-using namespace std;
 
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
@@ -54,7 +52,6 @@ END_MESSAGE_MAP()
 
 CAROMADlg::CAROMADlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_AROMA_DIALOG, pParent)
-	, text(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -62,14 +59,12 @@ CAROMADlg::CAROMADlg(CWnd* pParent /*=nullptr*/)
 void CAROMADlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT1, text);
 }
 
 BEGIN_MESSAGE_MAP(CAROMADlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON1, &CAROMADlg::OnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -158,37 +153,3 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CAROMADlg::OnClickedButton1()
-{
-	CkString strOut;
-	CkSpider spider;
-
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
-	/*if (text == "01") text = "00";
-	else text = "01";*/
-
-	//  The Initialize method may be called with just the domain name,
-	//  such as "www.joelonsoftware.com" or a full URL.  If you pass only
-	//  the domain name, you must add URLs to the unspidered list by calling
-	//  AddUnspidered.  Otherwise, the URL you pass to Initialize is the 1st
-	//  URL in the unspidered list.
-
-	const char * domain = "www.joelonsoftware.com";
-	const char * url = "https://www.joelonsoftware.com";
-	spider.Initialize(domain);
-
-	spider.AddUnspidered(url);
-
-	bool success;
-	success = spider.CrawlNext();
-
-	int i;
-	for (i = 0; i <= spider.get_NumOutboundLinks() - 1; i++) {
-		strOut.append(spider.getOutboundLink(i));
-		strOut.append("\r\n");
-	}
-
-	SetDlgItemText(IDC_EDIT1, strOut.getUnicode());
-	UpdateData(FALSE);
-}
