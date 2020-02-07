@@ -8,6 +8,11 @@
 // CAROMADlg 대화 상자
 class CAROMADlg : public CDialogEx
 {
+
+private:
+	CPoint m_prev_pos;
+	BOOL m_is_clicked = FALSE;
+
 // 생성입니다.
 public:
 	CAROMADlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
@@ -31,4 +36,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };

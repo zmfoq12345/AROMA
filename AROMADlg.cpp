@@ -65,6 +65,9 @@ BEGIN_MESSAGE_MAP(CAROMADlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -102,7 +105,7 @@ BOOL CAROMADlg::OnInitDialog()
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 
 	CRgn rgn;
-	rgn.CreateEllipticRgn(0, 0, 200, 200);
+	rgn.CreateEllipticRgn(0, 0, 400, 400);
 	SetWindowRgn(rgn, TRUE);
 
 	SetBackgroundColor(RGB(0, 200, 255));
@@ -159,3 +162,46 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CAROMADlg::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	if (!m_is_clicked) {
+		m_is_clicked = TRUE;
+		m_prev_pos = point;
+		GetCursorPos(&m_prev_pos);
+		SetCapture(); // window를 빠져나가도 마우스 이벤트를 계속 받아옴
+	}
+
+	CDialogEx::OnLButtonDown(nFlags, point);
+}
+
+
+void CAROMADlg::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	if (m_is_clicked) {
+		m_is_clicked = FALSE;
+		ReleaseCapture(); // SetCapture 해제
+	}
+
+	CDialogEx::OnLButtonUp(nFlags, point);
+}
+
+
+void CAROMADlg::OnMouseMove(UINT nFlags, CPoint point)
+{
+
+	if (m_is_clicked) {
+		CRect r;
+		GetWindowRect(r);
+
+		CPoint pos;
+		GetCursorPos(&pos);
+
+		SetWindowPos(NULL, r.left + pos.x - m_prev_pos.x, r.top + pos.y - m_prev_pos.y, 0, 0, SWP_NOSIZE);
+
+		m_prev_pos = pos;
+	}
+
+	CDialogEx::OnMouseMove(nFlags, point);
+}
