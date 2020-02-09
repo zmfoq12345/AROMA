@@ -193,6 +193,7 @@ void CAROMADlg::saveImg() {
 	// 캡쳐에 사용할 CImage 객체를 선언한다.
 	CImage tips_image;
 
+
 	CRect r;
 	GetWindowRect(r);
 
