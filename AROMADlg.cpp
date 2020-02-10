@@ -280,9 +280,6 @@ void CAROMADlg::OnDestroy()
 void CAROMADlg::OnClickedButton1()
 {
 	saveImg();
-
-
-
 	// HDC hdc = ::GetDC(m_hWnd);
 	// mpPreview->ScreenShot(hdc, 100,100,100,100);
 }
