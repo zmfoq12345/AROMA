@@ -284,7 +284,6 @@ void CAROMADlg::OnClickedButton1()
 	// mpPreview->ScreenShot(hdc, 100,100,100,100);
 }
 
-
 void CAROMADlg::OnClickedButton2()
 {
 	OnOK();
