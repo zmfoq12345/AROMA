@@ -183,7 +183,6 @@ HCURSOR CAROMADlg::OnQueryDragIcon()
 }
 
 void CAROMADlg::ConnectDB(){
-	
 }
 
 void CAROMADlg::saveImg() {
